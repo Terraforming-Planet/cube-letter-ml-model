@@ -1,144 +1,191 @@
-# Cube Letter ML Model
+# 🧊 Cube Letter ML Model
 
-A compact experimental project for learning and visualizing cube-face letter assignments from structured text descriptions.
-
-This repository presents a small neural prototype that maps visible cube faces (`front`, `right`, `top`) to the expected ordered letter triplet and compares an incorrect visualization against a corrected one. It is documented in a clean research-style format for clarity, reproducibility, and further iteration.
+A compact neural network experiment for learning structured cube-face labeling from textual descriptions, with full training pipeline and visual validation.
 
 ---
 
-## Project Overview
+## 🚀 Overview
 
-The goal of this project is to test whether a lightweight neural model can learn a simple symbolic mapping between a cube description and the correct face-letter output.
+This project demonstrates how a lightweight neural network can learn a symbolic mapping between structured cube descriptions and their corresponding face labels.
 
-Each sample follows the format:
+Each cube is described using:
 
-- Input: `front=A, right=B, top=C`
-- Output: `ABC`
+```
+front=A, right=B, top=C
+```
 
-The same structure is repeated for six cubes:
+The model predicts:
 
-1. `A, B, C`
-2. `D, E, F`
-3. `G, H, I`
-4. `J, K, L`
-5. `M, N, O`
-6. `P, Q, R`
+```
+ABC
+```
 
-The model is intentionally small and easy to inspect. The project emphasizes:
-
-- clear data preparation,
-- transparent model definition,
-- readable training logs,
-- visual comparison of incorrect vs corrected outputs,
-- clean documentation for reproducibility.
+This mapping is learned for multiple cube instances and later visualized in a 3D-style layout.
 
 ---
 
-## Repository Structure
+## 🧠 Key Features
 
-- `README.md` — main project overview
-- `data_preparation.md` — dataset format and preprocessing notes
-- `model_training.md` — model architecture and training description
-- `training_logs.md` — logs and metrics summary
-- `execution_guide.md` — step-by-step run instructions
-- `Predicted Cube Face Labels in 2x3 Grid.png` — corrected visualization
-- `Incorrect Cube Face Prediction with Labeling Errors.png` — incorrect visualization for comparison
-
----
-
-## Method
-
-### 1. Data Representation
-The dataset consists of structured text descriptions of cube faces and their expected ordered output labels.  
-Each example is converted into indexed character tokens using a simple character-level vocabulary.
-
-### 2. Model
-The model is a minimal PyTorch network composed of:
-
-- an embedding layer,
-- mean aggregation over the input sequence,
-- one linear projection layer producing the output sequence.
-
-This architecture was chosen to keep the prototype small, interpretable, and fast to train.
-
-### 3. Training
-The model is trained using:
-
-- **Optimizer:** Adam
-- **Loss:** CrossEntropyLoss
-- **Epochs:** 200
-
-Loss values are printed during training to make optimization progress visible.
-
-### 4. Evaluation
-After training, the model is tested on the defined cube descriptions and returns the predicted 3-letter output for each case.
+- Character-level encoding of structured inputs  
+- Minimal PyTorch model (embedding + linear layer)  
+- Full training pipeline implemented in Google Colab  
+- Accurate prediction of cube face labels  
+- 2D isometric visualization of 3D cubes  
+- Comparison between incorrect and corrected outputs  
 
 ---
 
-## Visual Results
+## 📓 Training Notebook
 
-## Corrected Visualization
+The full training process is implemented in:
+
+👉 **cube_face_labeling_3d_model.ipynb**
+
+This notebook includes:
+
+- data preparation and encoding  
+- model definition (`TinyModel`)  
+- training loop (Adam + CrossEntropyLoss)  
+- prediction testing  
+- cube visualization using Matplotlib  
+
+The model learns mappings like:
+
+```
+front=A, right=B, top=C → ABC
+front=G, right=H, top=I → GHI
+```
+
+---
+
+## 🏗 Model Architecture
+
+The model is intentionally simple:
+
+- Embedding layer (character-level)
+- Mean pooling over sequence
+- Linear layer predicting output sequence
+
+This design keeps the model:
+
+- lightweight  
+- interpretable  
+- fast to train  
+
+---
+
+## 📊 Training Results
+
+Training converges quickly:
+
+- Loss decreases steadily over epochs  
+- Model achieves perfect predictions on training set  
+- Outputs are consistent across all test cases  
+
+Example predictions:
+
+```
+front=A, right=B, top=C → ABC
+front=P, right=Q, top=R → PQR
+```
+
+---
+
+## 🧩 Visual Results
+
+### ✅ Correct Visualization
 
 **Predicted Cube Face Labels in 2x3 Grid**
 
-This figure shows the corrected cube-face layout in a 2x3 grid.  
-Each cube contains three distinct visible labels corresponding to the `front`, `right`, and `top` faces.  
-This version reflects the intended structured mapping and serves as the clean reference visualization.
+Clean and correct mapping of cube faces.
 
-![Corrected cube visualization](./Predicted%20Cube%20Face%20Labels%20in%202x3%20Grid.png)
+![Correct visualization](./Predicted%20Cube%20Face%20Labels%20in%202x3%20Grid.png)
 
 ---
 
-## Incorrect Visualization
+### ❌ Incorrect Visualization
 
 **Incorrect Cube Face Prediction with Labeling Errors**
 
-This figure shows an incorrect visualization containing label assignment errors.  
-Some cubes contain repeated or misplaced letters, which makes the arrangement inconsistent with the intended mapping.  
-It is included to document the failure case and clearly contrast it with the corrected version.
+Example of flawed output with duplicated or misplaced labels.
 
-![Incorrect cube visualization](./Incorrect%20Cube%20Face%20Prediction%20with%20Labeling%20Errors.png)
+![Incorrect visualization](./Incorrect%20Cube%20Face%20Prediction%20with%20Labeling%20Errors.png)
 
 ---
 
-## Why This Repository Exists
+## 📂 Repository Structure
 
-This repository is meant as a compact experimental showcase:
-
-- to demonstrate a symbolic cube-label mapping task,
-- to document a tiny neural baseline,
-- to present both incorrect and corrected visual outputs,
-- to provide a clean base for future improvements.
-
-It can also serve as a small reference project for anyone exploring:
-- symbolic-to-structured prediction,
-- lightweight PyTorch experiments,
-- visual verification of model outputs.
-
----
-
-## Reproducibility
-
-The project is split into separate markdown files so each part can be inspected quickly:
-
-- dataset and preprocessing,
-- model and training,
-- logs and metrics,
-- execution instructions.
-
-This structure is designed to make the experiment easier to understand and extend.
+```
+├── README.md
+├── cube_face_labeling_3d_model.ipynb
+├── data_preparation.md
+├── model_training.md
+├── training_logs.md
+├── execution_guide.md
+├── Predicted Cube Face Labels in 2x3 Grid.png
+├── Incorrect Cube Face Prediction with Labeling Errors.png
+```
 
 ---
 
-## Notes
+## ▶️ How to Run
 
-This repository is a documented prototype and visual experiment.  
-If adapted into a formal challenge submission, it should be restructured to match the exact submission requirements of the target benchmark, including the required folder layout, metadata files, logs, and executable training script.
+1. Open the notebook:
+   ```
+   cube_face_labeling_3d_model.ipynb
+   ```
+
+2. Install dependencies:
+   ```
+   pip install torch matplotlib
+   ```
+
+3. Run all cells:
+   - data encoding  
+   - training  
+   - prediction  
+   - visualization  
+
+4. Observe outputs and generated cube plots
 
 ---
 
-## Author
+## 🔬 Reproducibility
 
-**Terraforming-Planet**
+This project is fully reproducible:
 
-Focused on compact AI experimentation, structured reasoning tasks, and interpretable technical prototypes.
+- deterministic dataset  
+- explicit training loop  
+- clear logs  
+- complete notebook included  
+
+---
+
+## 🎯 Purpose
+
+This repository serves as:
+
+- a minimal ML experiment  
+- a symbolic reasoning prototype  
+- a base for spatial AI tasks  
+- a candidate structure for Parameter Golf-style submissions  
+
+---
+
+## ⚠️ Note
+
+This is a prototype repository.  
+To be submitted to a formal benchmark (e.g., Parameter Golf), it would require:
+
+- structured `/records/...` folder  
+- `submission.json`  
+- standalone training script  
+- strict size constraints  
+
+---
+
+## 👤 Author
+
+Terraforming-Planet
+
+Exploring AI, structured reasoning, and systems that can evolve toward real-world applications.
